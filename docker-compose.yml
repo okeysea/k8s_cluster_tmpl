@@ -8,6 +8,8 @@ services:
       - .env
     volumes:
       - ./ansible:/ansible
+      - ./.ssh_keys:/root/.ssh
+      - ./.ssh_config:/root/ssh_config
       - python-packages:/root/.local/share
     working_dir: /ansible
     tty: true
