@@ -1,0 +1,30 @@
+version: '3'
+services:
+  ansible:
+    build:
+      context: .
+      dockerfile: ./.containers/ansible/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./ansible:/ansible
+      - python-packages:/root/.local/share
+    working_dir: /ansible
+    tty: true
+    network_mode: host
+
+  terraform:
+    build:
+      context: .
+      dockerfile: ./.containers/terraform/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./terraform:/terraform
+      - ./.ssh_keys:/root/.ssh
+      - ./.ssh_config:/root/ssh_config
+    working_dir: /terraform
+    tty: true
+
+volumes:
+  python-packages:
