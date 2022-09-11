@@ -32,7 +32,10 @@ AN_INVENTORY=-i inventory/executers.yml
 AN_ENTRY_PB=site.yml
 AN_CMD=$(AN_COMP_CMD) ansible-playbook $(AN_INVENTORY) $(AN_ENTRY_PB)
 
-.PHONY: ansible-syntax ansible-task ansible-dry ansible-dry-trace ansible-apply ansible-apply-trace
+.PHONY: ansible-sh ansible-syntax ansible-task ansible-dry ansible-dry-trace ansible-apply ansible-apply-trace
+ansible-sh:
+	$(AN_COMP_CMD) bash
+
 ansible-syntax:
 	$(AN_CMD) --syntax-check
 
