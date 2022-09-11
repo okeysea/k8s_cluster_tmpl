@@ -1,0 +1,19 @@
+---
+
+- block:
+  
+  - name: Generate ssh keypair
+    openssh_keypair:
+      path: "{{ var_ansible_ssh_key_pri_path }}"
+      type: ecdsa
+      size: 521
+      mode: 0600
+    register: executer_key
+
+  - debug: var=executer_key
+
+  become: yes
+  tags:
+    - construct
+    - executer
+    - keygen
