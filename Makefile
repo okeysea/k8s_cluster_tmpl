@@ -3,7 +3,6 @@ COMPOSE_CMD=docker-compose run --rm
 #####
 # terraform
 #####
-
 TF_COMP_CMD=$(COMPOSE_CMD) terraform
 TF_VARF=vars.tfvars
 TF_CMD=$(TF_COMP_CMD)
@@ -24,3 +23,36 @@ terraform-apply:
 
 terraform-destroy:
 	$(TF_CMD) destroy -var-file=$(TF_VARF)
+
+#####
+# ansible
+#####
+AN_COMP_CMD=$(COMPOSE_CMD) ansible
+AN_INVENTORY=-i inventory/executers.yml
+AN_ENTRY_PB=site.yml
+AN_CMD=$(AN_COMP_CMD) ansible-playbook $(AN_INVENTORY) $(AN_ENTRY_PB)
+
+.PHONY: ansible-syntax ansible-task ansible-dry ansible-dry-trace ansible-apply ansible-apply-trace
+ansible-syntax:
+	$(AN_CMD) --syntax-check
+
+ansible-task:
+	$(AN_CMD) --list-task
+
+ansible-dry:
+	$(AN_CMD) --check
+
+ansible-dry-trace:
+	$(AN_CMD) --check -vvvv
+
+ansible-apply:
+	$(AN_CMD)
+
+ansible-apply-trace:
+	$(AN_CMD) -vvvv
+
+#####
+# misc
+#####
+fixperm:
+	sudo chown -R $(shell whoami):$(shell whoami) .
