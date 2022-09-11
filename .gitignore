@@ -1,0 +1,12 @@
+# env secret
+.env
+
+# terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+
+.ssh_keys/*
+!.ssh_keys/.keep
+.ssh_config/*
+!.ssh_config/.keep
