@@ -1,0 +1,45 @@
+---
+
+- name: Test custom ssh port
+  wait_for:
+    host: "{{ hostvars[host].ansible_host }}"
+    port: "{{ var_ansible_ssh_port }}"
+    timeout: 5
+  register: test_custom_ssh_port
+  failed_when: false
+  check_mode: no
+
+- name: Change ansible ssh port
+  set_fact:
+    ansible_port: "{{ var_ansible_ssh_port }}"
+  delegate_to: "{{ host }}"
+  delegate_facts: true
+  when: test_custom_ssh_port.elapsed < 5
+
+- name: Change ansible ssh user
+  set_fact:
+    ansible_ssh_user: "{{ var_ansible_user_name }}"
+  delegate_to: "{{ host }}"
+  delegate_facts: true
+  when: test_custom_ssh_port.elapsed < 5
+
+- name: Change ansible ssh key
+  set_fact:
+    ansible_ssh_private_key_file: "{{ var_ansible_ssh_key_pri_path }}"
+  delegate_to: "{{ host }}"
+  delegate_facts: true
+  when: test_custom_ssh_port.elapsed < 5
+
+- name: Change ansible become user
+  set_fact:
+    ansible_become_user: "{{ var_ansible_become_user }}"
+  delegate_to: "{{ host }}"
+  delegate_facts: true
+  when: test_custom_ssh_port.elapsed < 5
+
+- name: Change ansible sudo pass
+  set_fact:
+    ansible_become_password: "{{ var_ansible_user_pwd }}"
+  delegate_to: "{{ host }}"
+  delegate_facts: true
+  when: test_custom_ssh_port.elapsed < 5

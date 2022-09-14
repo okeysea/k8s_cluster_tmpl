@@ -1,0 +1,15 @@
+---
+
+- block:
+
+  - name: Setup ansible ssh connections
+    include_tasks: sshconnection_itr.yml
+    with_inventory_hostnames:
+      - all:!executers
+    loop_control:
+      loop_var: host
+
+  become: yes
+  tags:
+    - construct
+    - ssh
