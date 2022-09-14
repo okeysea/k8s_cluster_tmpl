@@ -1,0 +1,14 @@
+---
+
+# see references: 
+# https://docs.ansible.com/ansible/latest/plugins/inventory.html
+plugin: vultr
+keyed_groups:
+  - prefix: kind
+    key: tag | lower
+  - separator: ""
+    key: os
+
+groups:
+  k8s_masters: "('master' in name) and ('k8s' in name)"
+  k8s_workers: "('worker' in name) and ('k8s' in name)"
